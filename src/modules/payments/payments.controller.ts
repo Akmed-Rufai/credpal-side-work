@@ -12,13 +12,13 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
   InitializePaymentSchema,
-  InitializePaymentDto,
+  type InitializePaymentDto,
 } from './dto/payments.dto';
 
 @Controller('payments')
 @UseGuards(JwtAuthGuard)
 export class PaymentsController {
-  constructor(private readonly paymentsService: PaymentsService) {}
+  constructor(private readonly paymentsService: PaymentsService) { }
 
   @Post('initialize')
   @HttpCode(200)

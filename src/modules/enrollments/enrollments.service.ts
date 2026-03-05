@@ -9,7 +9,7 @@ import { EnrollmentStatus, OrgRole } from '@prisma/client';
 
 @Injectable()
 export class EnrollmentsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async enrollInCohort(userId: string, cohortId: string) {
     const cohort = await this.prisma.cohort.findUnique({
@@ -80,7 +80,7 @@ export class EnrollmentsService {
       },
     });
 
-    if (!membership || membership.role === OrgRole.LEARNER) {
+    if (!membership) {
       throw new ForbiddenException(
         'You do not have permission to modify enrollment status for this organization',
       );

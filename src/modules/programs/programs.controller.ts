@@ -14,18 +14,18 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
   CreateProgramSchema,
-  CreateProgramDto,
+  type CreateProgramDto,
   UpdateProgramSchema,
-  UpdateProgramDto,
+  type UpdateProgramDto,
   CreateCohortSchema,
-  CreateCohortDto,
+  type CreateCohortDto,
   CreateSessionSchema,
-  CreateSessionDto,
+  type CreateSessionDto,
 } from './dto/programs.dto';
 
 @Controller('programs')
 export class ProgramsController {
-  constructor(private readonly programsService: ProgramsService) {}
+  constructor(private readonly programsService: ProgramsService) { }
 
   @Get('public')
   getPublicPrograms() {

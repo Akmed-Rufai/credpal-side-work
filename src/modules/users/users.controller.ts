@@ -9,13 +9,13 @@ import {
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { CreateProfileSchema, CreateProfileDto } from './dto/users.dto';
+import { CreateProfileSchema, type CreateProfileDto } from './dto/users.dto';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 
 @Controller('users')
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @Get('profile')
   async getProfile(@CurrentUser() user: { id: string }) {

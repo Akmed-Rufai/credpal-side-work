@@ -14,7 +14,7 @@ export const CreateOrganizationSchema = z.object({
     .string()
     .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, 'Must be a valid hex color')
     .optional(),
-});
+}).strict();
 
 export type CreateOrganizationDto = z.infer<typeof CreateOrganizationSchema>;
 
@@ -24,6 +24,6 @@ export type UpdateOrganizationDto = z.infer<typeof UpdateOrganizationSchema>;
 export const AddMemberSchema = z.object({
   email: z.string().email('Invalid email address'),
   role: z.enum(['ADMIN', 'FACILITATOR']).default('FACILITATOR'),
-});
+}).strict();
 
 export type AddMemberDto = z.infer<typeof AddMemberSchema>;

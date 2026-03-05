@@ -9,7 +9,7 @@ export const CreateProgramSchema = z.object({
     .min(0, 'Price must be a positive integer in kobo/cents'),
   currency: z.string().length(3).default('NGN'),
   coverImage: z.string().url().optional(),
-});
+}).strict();
 
 export type CreateProgramDto = z.infer<typeof CreateProgramSchema>;
 
@@ -22,7 +22,7 @@ export const CreateCohortSchema = z.object({
   name: z.string().min(1, 'Cohort name is required'),
   startDate: z.string().datetime('Invalid start date'),
   endDate: z.string().datetime('Invalid end date'),
-});
+}).strict();
 
 export type CreateCohortDto = z.infer<typeof CreateCohortSchema>;
 
@@ -31,6 +31,6 @@ export const CreateSessionSchema = z.object({
   startTime: z.string().datetime('Invalid start time'),
   endTime: z.string().datetime('Invalid end time'),
   meetingLink: z.string().url().optional(),
-});
+}).strict();
 
 export type CreateSessionDto = z.infer<typeof CreateSessionSchema>;

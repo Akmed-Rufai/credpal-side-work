@@ -5,13 +5,13 @@ export const UpdateProgressSchema = z.object({
     .number()
     .min(0, 'Progress cannot be less than 0')
     .max(100, 'Progress cannot be more than 100'),
-});
+}).strict();
 
 export type UpdateProgressDto = z.infer<typeof UpdateProgressSchema>;
 
 export const UpdateEnrollmentStatusSchema = z.object({
   status: z.enum(['ACTIVE', 'COMPLETED', 'DROPPED']),
-});
+}).strict();
 
 export type UpdateEnrollmentStatusDto = z.infer<
   typeof UpdateEnrollmentStatusSchema

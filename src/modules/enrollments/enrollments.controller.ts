@@ -15,15 +15,15 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
   UpdateProgressSchema,
-  UpdateProgressDto,
+  type UpdateProgressDto,
   UpdateEnrollmentStatusSchema,
-  UpdateEnrollmentStatusDto,
+  type UpdateEnrollmentStatusDto,
 } from './dto/enrollments.dto';
 
 @Controller('enrollments')
 @UseGuards(JwtAuthGuard)
 export class EnrollmentsController {
-  constructor(private readonly enrollmentsService: EnrollmentsService) {}
+  constructor(private readonly enrollmentsService: EnrollmentsService) { }
 
   @Get('my-enrollments')
   getUserEnrollments(@CurrentUser() user: { id: string }) {

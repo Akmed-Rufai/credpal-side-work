@@ -15,17 +15,17 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
   CreateOrganizationSchema,
-  CreateOrganizationDto,
+  type CreateOrganizationDto,
   UpdateOrganizationSchema,
-  UpdateOrganizationDto,
+  type UpdateOrganizationDto,
   AddMemberSchema,
-  AddMemberDto,
+  type AddMemberDto,
 } from './dto/organizations.dto';
 
 @Controller('organizations')
 @UseGuards(JwtAuthGuard)
 export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) {}
+  constructor(private readonly organizationsService: OrganizationsService) { }
 
   @Post()
   @UsePipes(new ZodValidationPipe(CreateOrganizationSchema))

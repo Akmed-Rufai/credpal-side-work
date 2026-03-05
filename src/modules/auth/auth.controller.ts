@@ -12,17 +12,17 @@ import {
 import { AuthService } from './auth.service';
 import {
   RegistrationSchema,
-  RegistrationDto,
+  type RegistrationDto,
   LoginSchema,
-  LoginDto,
+  type LoginDto,
 } from './dto/auth.dto';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
-import { Response } from 'express';
+import type { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
   @UsePipes(new ZodValidationPipe(RegistrationSchema))
@@ -62,8 +62,8 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Res({ passthrough: true }) res: Response) {
-    res.cookie('Authentication', '', { maxAge: 0, httpOnly: true });
-    res.cookie('Refresh', '', { maxAge: 0, httpOnly: true });
+    res.cookie('Authentication', '', { maxAge: 0, httpOnly: true, sameSite: 'strict' });
+    res.cookie('Refresh', '', { maxAge: 0, httpOnly: true, sameSite: 'strict' });
     return { success: true };
   }
 
@@ -71,12 +71,14 @@ export class AuthController {
     res.cookie('Authentication', accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie('Refresh', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
   }

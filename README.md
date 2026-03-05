@@ -58,7 +58,18 @@ npm run start:prod
 - `src/common`: Global decorators, filters, guards, and interceptors.
 - `src/config`: Zod environment validation.
 - `src/database`: Prisma Service and adapter logic.
-- `src/modules`: Domain-driven logical components (`auth`, `users`, `organizations`, `programs`, etc.).
+- `src/modules`: Domain-driven logical components (`auth`, `users`, `organizations`, `programs`, `enrollments` etc.).
+
+## Implemented Features
+1. **Database Schema & Infrastructure**: Complete PostgreSQL / Prisma ORM modeling with Zod `.env` validation.
+2. **User & Authentication Core**: Registration, Login, and Auth Guards leveraging JWTs over HTTP-only secure cookies and `bcrypt` hashing mapped through `auth` and `users` modules.
+3. **Organization Management**: Complete B2B multi-tenant modeling handling Organization creation, unique slug generation, and role-based `Org_Members` handling via `organizations` module.
+4. **Learning Flow**: E-learning curriculum architecture mapping `Programs` -> `Cohorts` -> `Sessions` with automated strict tenancy segregation testing via `programs` module.
+5. **Enrollment Tracking**: Secure learner progress tracking mapping User states to Active/Completed/Dropped paths via `enrollments` module.
+
+## Pending Features
+- **Payments & Webhooks**: Paystack web-hook synchronization logic
+- **Certificate Generation**: BullMQ Background Jobs for handling PDF creation off-thread.
 
 ## License
 UNLICENSED

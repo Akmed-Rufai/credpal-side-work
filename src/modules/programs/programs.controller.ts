@@ -1,18 +1,31 @@
-import { Controller, Get, Post, Patch, Body, Param, UseGuards, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { ProgramsService } from './programs.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
-  CreateProgramSchema, CreateProgramDto,
-  UpdateProgramSchema, UpdateProgramDto,
-  CreateCohortSchema, CreateCohortDto,
-  CreateSessionSchema, CreateSessionDto
+  CreateProgramSchema,
+  CreateProgramDto,
+  UpdateProgramSchema,
+  UpdateProgramDto,
+  CreateCohortSchema,
+  CreateCohortDto,
+  CreateSessionSchema,
+  CreateSessionDto,
 } from './dto/programs.dto';
 
 @Controller('programs')
 export class ProgramsController {
-  constructor(private readonly programsService: ProgramsService) { }
+  constructor(private readonly programsService: ProgramsService) {}
 
   @Get('public')
   getPublicPrograms() {

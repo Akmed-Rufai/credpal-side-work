@@ -7,4 +7,4 @@ import { ProgramsService } from './programs.service';
   providers: [ProgramsService],
   exports: [ProgramsService],
 })
-export class ProgramsModule { }
+export class ProgramsModule {}

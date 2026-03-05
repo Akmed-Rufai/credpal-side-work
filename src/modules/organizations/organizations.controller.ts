@@ -1,22 +1,38 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, UseGuards, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  UseGuards,
+  UsePipes,
+} from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import {
-  CreateOrganizationSchema, CreateOrganizationDto,
-  UpdateOrganizationSchema, UpdateOrganizationDto,
-  AddMemberSchema, AddMemberDto
+  CreateOrganizationSchema,
+  CreateOrganizationDto,
+  UpdateOrganizationSchema,
+  UpdateOrganizationDto,
+  AddMemberSchema,
+  AddMemberDto,
 } from './dto/organizations.dto';
 
 @Controller('organizations')
 @UseGuards(JwtAuthGuard)
 export class OrganizationsController {
-  constructor(private readonly organizationsService: OrganizationsService) { }
+  constructor(private readonly organizationsService: OrganizationsService) {}
 
   @Post()
   @UsePipes(new ZodValidationPipe(CreateOrganizationSchema))
-  create(@CurrentUser() user: { id: string }, @Body() dto: CreateOrganizationDto) {
+  create(
+    @CurrentUser() user: { id: string },
+    @Body() dto: CreateOrganizationDto,
+  ) {
     return this.organizationsService.createOrganization(user.id, dto);
   }
 

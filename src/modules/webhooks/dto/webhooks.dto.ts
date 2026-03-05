@@ -1,14 +1,20 @@
 import { z } from 'zod';
 
-export const PaystackWebhookSchema = z.object({
+export const PaystackWebhookSchema = z
+  .object({
     event: z.string(),
-    data: z.object({
+    data: z
+      .object({
         reference: z.string(),
-        metadata: z.object({
+        metadata: z
+          .object({
             user_id: z.string().optional(),
             cohort_id: z.string().optional(),
-        }).optional(),
-    }).passthrough(),
-}).passthrough();
+          })
+          .optional(),
+      })
+      .passthrough(),
+  })
+  .passthrough();
 
 export type PaystackWebhookDto = z.infer<typeof PaystackWebhookSchema>;

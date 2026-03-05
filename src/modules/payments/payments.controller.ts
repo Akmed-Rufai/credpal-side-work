@@ -1,14 +1,24 @@
-import { Controller, Post, Body, UseGuards, UsePipes, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  UsePipes,
+  HttpCode,
+} from '@nestjs/common';
 import { PaymentsService } from './payments.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
-import { InitializePaymentSchema, InitializePaymentDto } from './dto/payments.dto';
+import {
+  InitializePaymentSchema,
+  InitializePaymentDto,
+} from './dto/payments.dto';
 
 @Controller('payments')
 @UseGuards(JwtAuthGuard)
 export class PaymentsController {
-  constructor(private readonly paymentsService: PaymentsService) { }
+  constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post('initialize')
   @HttpCode(200)

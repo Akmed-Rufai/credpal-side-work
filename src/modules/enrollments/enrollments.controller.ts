@@ -1,14 +1,29 @@
-import { Controller, Get, Post, Patch, Body, Param, UseGuards, UsePipes, HttpCode } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Body,
+  Param,
+  UseGuards,
+  UsePipes,
+  HttpCode,
+} from '@nestjs/common';
 import { EnrollmentsService } from './enrollments.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
-import { UpdateProgressSchema, UpdateProgressDto, UpdateEnrollmentStatusSchema, UpdateEnrollmentStatusDto } from './dto/enrollments.dto';
+import {
+  UpdateProgressSchema,
+  UpdateProgressDto,
+  UpdateEnrollmentStatusSchema,
+  UpdateEnrollmentStatusDto,
+} from './dto/enrollments.dto';
 
 @Controller('enrollments')
 @UseGuards(JwtAuthGuard)
 export class EnrollmentsController {
-  constructor(private readonly enrollmentsService: EnrollmentsService) { }
+  constructor(private readonly enrollmentsService: EnrollmentsService) {}
 
   @Get('my-enrollments')
   getUserEnrollments(@CurrentUser() user: { id: string }) {
@@ -31,7 +46,11 @@ export class EnrollmentsController {
     @CurrentUser() user: { id: string },
     @Body() dto: UpdateProgressDto,
   ) {
-    return this.enrollmentsService.updateProgress(user.id, enrollmentId, dto.progress);
+    return this.enrollmentsService.updateProgress(
+      user.id,
+      enrollmentId,
+      dto.progress,
+    );
   }
 
   @Patch(':id/status')
@@ -41,6 +60,10 @@ export class EnrollmentsController {
     @CurrentUser() user: { id: string },
     @Body() dto: UpdateEnrollmentStatusDto,
   ) {
-    return this.enrollmentsService.updateStatus(user.id, enrollmentId, dto.status);
+    return this.enrollmentsService.updateStatus(
+      user.id,
+      enrollmentId,
+      dto.status,
+    );
   }
 }

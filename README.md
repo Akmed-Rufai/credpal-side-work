@@ -66,10 +66,8 @@ npm run start:prod
 3. **Organization Management**: Complete B2B multi-tenant modeling handling Organization creation, unique slug generation, and role-based `Org_Members` handling via `organizations` module.
 4. **Learning Flow**: E-learning curriculum architecture mapping `Programs` -> `Cohorts` -> `Sessions` with automated strict tenancy segregation testing via `programs` module.
 5. **Enrollment Tracking**: Secure learner progress tracking mapping User states to Active/Completed/Dropped paths via `enrollments` module.
-
-## Pending Features
-- **Payments & Webhooks**: Paystack web-hook synchronization logic
-- **Certificate Generation**: BullMQ Background Jobs for handling PDF creation off-thread.
+6. **Payments & Webhooks**: Paystack web-hook synchronization logic structurally validated through HMAC verification scaling transactional mapping correctly to enrollments.
+7. **Certificate Generation**: BullMQ Background Jobs orchestrating Worker architectures decoupling intensive PDF generation natively off the main thread.
 
 ## License
 UNLICENSED

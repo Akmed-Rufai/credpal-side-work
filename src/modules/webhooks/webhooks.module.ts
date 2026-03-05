@@ -9,4 +9,4 @@ import { EnrollmentsModule } from '../enrollments/enrollments.module';
   providers: [WebhooksService],
   exports: [WebhooksService],
 })
-export class WebhooksModule { }
+export class WebhooksModule {}

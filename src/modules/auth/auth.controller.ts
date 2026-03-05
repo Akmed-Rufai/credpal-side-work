@@ -1,18 +1,37 @@
-import { Controller, Post, Body, UsePipes, HttpCode, HttpStatus, Res, UseGuards, Req } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UsePipes,
+  HttpCode,
+  HttpStatus,
+  Res,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { RegistrationSchema, RegistrationDto, LoginSchema, LoginDto } from './dto/auth.dto';
+import {
+  RegistrationSchema,
+  RegistrationDto,
+  LoginSchema,
+  LoginDto,
+} from './dto/auth.dto';
 import { ZodValidationPipe } from '../../common/pipes/zod-validation.pipe';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   @UsePipes(new ZodValidationPipe(RegistrationSchema))
-  async register(@Body() registrationDto: RegistrationDto, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, refreshToken, user } = await this.authService.register(registrationDto);
+  async register(
+    @Body() registrationDto: RegistrationDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { accessToken, refreshToken, user } =
+      await this.authService.register(registrationDto);
     this.setCookies(res, accessToken, refreshToken);
     return user;
   }
@@ -20,8 +39,12 @@ export class AuthController {
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ZodValidationPipe(LoginSchema))
-  async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, refreshToken, user } = await this.authService.login(loginDto);
+  async login(
+    @Body() loginDto: LoginDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const { accessToken, refreshToken, user } =
+      await this.authService.login(loginDto);
     this.setCookies(res, accessToken, refreshToken);
     return user;
   }
@@ -30,7 +53,8 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('jwt-refresh'))
   async refresh(@Req() req: any, @Res({ passthrough: true }) res: Response) {
-    const { accessToken, refreshToken, user } = await this.authService.refreshTokens(req.user.sub, req.user.role);
+    const { accessToken, refreshToken, user } =
+      await this.authService.refreshTokens(req.user.sub, req.user.role);
     this.setCookies(res, accessToken, refreshToken);
     return user;
   }

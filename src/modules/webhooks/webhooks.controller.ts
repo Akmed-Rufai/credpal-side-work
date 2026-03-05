@@ -1,10 +1,16 @@
-import { Controller, Post, Headers, Req, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Headers,
+  Req,
+  BadRequestException,
+} from '@nestjs/common';
 import { WebhooksService } from './webhooks.service';
 import { PaystackWebhookDto } from './dto/webhooks.dto';
 
 @Controller('webhooks')
 export class WebhooksController {
-  constructor(private readonly webhooksService: WebhooksService) { }
+  constructor(private readonly webhooksService: WebhooksService) {}
 
   @Post('paystack')
   async handlePaystackWebhook(
@@ -21,6 +27,10 @@ export class WebhooksController {
     const rawBodyBuffer = Buffer.from(JSON.stringify(req.body));
     const payload = req.body as PaystackWebhookDto;
 
-    return this.webhooksService.handlePaystackWebhook(signature, rawBodyBuffer, payload);
+    return this.webhooksService.handlePaystackWebhook(
+      signature,
+      rawBodyBuffer,
+      payload,
+    );
   }
 }

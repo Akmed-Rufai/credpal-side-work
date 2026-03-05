@@ -6,6 +6,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validateEnv } from './config/env.config';
 import { DatabaseModule } from './database/database.module';
+import { BullModule } from '@nestjs/bullmq';
+import { ConfigService } from '@nestjs/config';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
@@ -23,10 +25,20 @@ import { RolesGuard } from './common/guards/roles.guard';
       validate: validateEnv,
       isGlobal: true,
     }),
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 10,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10,
+      },
+    ]),
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        connection: {
+          url: config.get<string>('REDIS_URL'),
+        },
+      }),
+    }),
     DatabaseModule,
     AuthModule,
     UsersModule,
@@ -50,5 +62,4 @@ import { RolesGuard } from './common/guards/roles.guard';
     },
   ],
 })
-export class AppModule { }
-
+export class AppModule {}

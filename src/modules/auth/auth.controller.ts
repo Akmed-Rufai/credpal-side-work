@@ -1,6 +1,8 @@
 import {
   Controller,
   Post,
+  Get,
+  Query,
   Body,
   UsePipes,
   HttpCode,
@@ -8,6 +10,7 @@ import {
   Res,
   UseGuards,
   Req,
+  BadRequestException
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import {
@@ -66,6 +69,31 @@ export class AuthController {
     res.cookie('Refresh', '', { maxAge: 0, httpOnly: true, sameSite: 'strict' });
     return { success: true };
   }
+
+    
+  @HttpCode(HttpStatus.OK)
+  @Get('verify-email')
+  verifyEmail(@Query('token') token: string) {
+    if (!token) throw new BadRequestException('Token is required');
+    return this.authService.verifyEmail(token);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('forgot-password')
+  forgotPassword(@Body('email') email: string) {
+    return this.authService.forgotPassword(email);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('reset-password')
+  resetPassword(
+  @Body('token') token: string,
+  @Body('password') password: string,
+  @Body('confirmPassword') confirmPassword: string
+) {
+  if (!token) throw new BadRequestException('Token is required');
+  return this.authService.resetPassword(token, password, confirmPassword);
+}
 
   private setCookies(res: Response, accessToken: string, refreshToken: string) {
     res.cookie('Authentication', accessToken, {

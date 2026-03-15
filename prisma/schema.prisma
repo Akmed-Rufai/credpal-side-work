@@ -40,6 +40,13 @@ model User {
   password_hash String
   role          Role      @default(USER)
   is_verified   Boolean   @default(false)
+  isEmailVerified          Boolean  @default(false)
+
+  emailVerificationToken   String?  @unique
+  emailVerificationExpires DateTime?
+
+  resetPasswordToken       String?  @unique
+  resetPasswordExpires     DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
 
@@ -74,7 +81,7 @@ model Organization {
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
 
-  owner       User     @relation("OrgOwner", fields: [owner_id], references: [id])
+  owner       User     @relation("OrgOwner", fields: [owner_id], references: [id], onDelete: Cascade)
   members     OrgMember[]
   programs    Program[]
 }
@@ -162,7 +169,7 @@ model Transaction {
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
 
-  user             User     @relation(fields: [user_id], references: [id])
+  user             User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([reference])
 }

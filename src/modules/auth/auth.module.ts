@@ -6,9 +6,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import { RefreshTokenStrategy } from './refresh-token.strategy';
+import { MailModule } from '../mail/mail.module';
+import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  imports: [UsersModule, PassportModule, JwtModule.register({})],
+  imports: [UsersModule, PassportModule, MailModule, DatabaseModule, JwtModule.register({})],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, RefreshTokenStrategy],
 })
